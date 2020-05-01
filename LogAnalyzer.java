@@ -10,6 +10,10 @@ public class LogAnalyzer
 {
     // Where to calculate the hourly access counts.
     private int[] hourCounts;
+    //where to calculate daily access counts
+    private int[] dayCounts;
+    //where to calculate monthly counts
+    private int[] monthCounts;
     // Use a LogfileReader to access the data.
     private LogfileReader reader;
 
@@ -21,6 +25,8 @@ public class LogAnalyzer
         // Create the array object to hold the hourly
         // access counts.
         hourCounts = new int[24];
+        dayCounts = new int[31];
+        monthCounts = new int[12];
         // Create the reader to obtain the data.
         reader = new LogfileReader();
         
@@ -34,14 +40,26 @@ public class LogAnalyzer
         // Create the array object to hold the hourly
         // access counts.
         hourCounts = new int[24];
+        
+        dayCounts = new int[31];
+        monthCounts = new int[12];
         // Create the reader to obtain the data.
         reader = new LogfileReader(file);
         
     }
     /**
+     * Analyze the data from the log file
+     */
+    public void analyzeData()
+    {
+        analyzeHourlyData();
+        analyzeDailyData();
+        analyzeMonthlyData();
+    }
+    /**
      * Analyze the hourly access data from the log file.
      */
-    public void analyzeHourlyData()
+    private void analyzeHourlyData()
     {
         while(reader.hasNext()) {
             LogEntry entry = reader.next();
@@ -49,7 +67,29 @@ public class LogAnalyzer
             hourCounts[hour]++;
         }
     }
-
+    /**
+     * Analyze the daily access data from the log file.
+     */
+    private void analyzeDailyData()
+    {
+        while(reader.hasNext()) {
+            LogEntry entry = reader.next();
+            int day = entry.getDay();
+            dayCounts[day]++;
+        }
+    }
+    /**
+     * Analyze the monthly access data from the log file.
+     */
+    private void analyzeMonthlyData()
+    {
+        while(reader.hasNext()) {
+            LogEntry entry = reader.next();
+            int month = entry.getMonth();
+            monthCounts[month]++;
+        }
+    }    
+    
     /**
      * Print the hourly counts.
      * These should have been set with a prior
@@ -62,6 +102,32 @@ public class LogAnalyzer
             System.out.println(hour + ": " + hourCounts[hour]);
         }
     }
+
+    /**
+     * Print the hourly counts.
+     * These should have been set with a prior
+     * call to analyzeHourlyData.
+     */
+    public void printDailyCounts()
+    {
+        System.out.println("Dy: Count");
+        for(int day = 0; day < dayCounts.length; day++) {
+            System.out.println(day + ": " + dayCounts[day]);
+        }
+    }    
+    
+     /**
+     * Print the hourly counts.
+     * These should have been set with a prior
+     * call to analyzeHourlyData.
+     */
+    public void printMonthlyCounts()
+    {
+        System.out.println("Mnth: Count");
+        for(int month = 0; month < monthCounts.length; month++) {
+            System.out.println(month + ": " + monthCounts[month]);
+        }
+    }    
     
     /**
      * Print the lines of data read by the LogfileReader
