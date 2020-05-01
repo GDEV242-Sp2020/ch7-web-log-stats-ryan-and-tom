@@ -157,7 +157,14 @@ public class LogAnalyzer
         
         return busyHour;
     }
-    
-    
+    /**
+     * quietestDay will fint what day was the 
+     */
+    public int quietestDay()
+    {
+        int day = 0;
+        
+        return day;
+    }
     
 }
