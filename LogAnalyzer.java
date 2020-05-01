@@ -1,4 +1,5 @@
 
+
 /**
  * Read web server data and analyse hourly access patterns.
  * 
@@ -130,9 +131,32 @@ public class LogAnalyzer
         
         return quietHour;
     }
-    
-    
-    
+    /**
+     * busiestTwoHhour method
+     */
+    public int busiestTwoHour()
+    {
+        int busyHour = 0;
+        int busyStorage = 0;
+        int tempCount;
+        for(int i = 0; i < hourCounts.length; i++)
+        {
+            if(i + 1 < hourCounts.length) {
+                tempCount = hourCounts[i] + hourCounts[i + 1];
+            }
+            else {
+                tempCount = hourCounts[i] + hourCounts[0];
+            }
+            if(tempCount > busyStorage)
+            {
+                busyHour = i;
+                busyStorage = tempCount;
+            }
+            
+        }
+        
+        return busyHour;
+    }
     
     
     
