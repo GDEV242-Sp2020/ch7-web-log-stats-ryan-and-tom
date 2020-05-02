@@ -25,7 +25,7 @@ public class LogAnalyzer
         // Create the array object to hold the hourly
         // access counts.
         hourCounts = new int[24];
-        dayCounts = new int[31];
+        dayCounts = new int[28];
         monthCounts = new int[12];
         // Create the reader to obtain the data.
         reader = new LogfileReader();
@@ -41,7 +41,7 @@ public class LogAnalyzer
         // access counts.
         hourCounts = new int[24];
         
-        dayCounts = new int[31];
+        dayCounts = new int[28];
         monthCounts = new int[12];
         // Create the reader to obtain the data.
         reader = new LogfileReader(file);
@@ -237,9 +237,135 @@ public class LogAnalyzer
      */
     public int quietestDay()
     {
-        int day = 0;
+        int quietDay = 0;
+        int quietStorage = dayCounts[0];
         
-        return day;
+        for (int i = 0; i < dayCounts.length; i++)
+        {
+            if(dayCounts[i] < quietStorage)
+            {
+                quietStorage = dayCounts[i];
+                quietDay = i;
+            }
+            else if (dayCounts[i] == quietStorage)
+            {
+                quietDay = i;
+            }
+            
+            
+        }
+        
+        return quietDay + 1; //the plus one is for the correct index
+    }
+    /**
+     * this returns the busiest day out of a month as an int
+     */
+    public int busiestDay()
+    {
+        int busyDay = 0;
+        int busyStorage = 0;
+         
+        
+        for (int i = 0; i < dayCounts.length; i++)
+        {
+            if(dayCounts[i] > busyStorage)
+            {
+                busyStorage = dayCounts[i];
+                busyDay = i;
+            }
+            else if (dayCounts[i] == busyStorage)
+            {
+                busyDay = i;
+            }
+        }
+        
+        return busyDay + 1;
+    }
+    /**
+     * this returns the total count for the month with the heighest count as an int
+     */
+    public int totalAccessesPerMonth()
+    {
+        int totalMonth = 0;
+        int monthStorage = 0;
+         
+        
+        for (int i = 0; i < monthCounts.length; i++)
+        {
+            if(monthCounts[i] > monthStorage)
+            {
+                monthStorage = monthCounts[i];
+                totalMonth = i;
+            }
+            else if (monthCounts[i] == monthStorage)
+            {
+                totalMonth = i;
+            }
+        }
+        
+        return monthCounts[totalMonth];
+    }
+    /**
+     * this returns the quietest month as an int
+     */
+    public int quietestMonth()
+    {
+        int quietMonth = 0;
+        int monthStorage = monthCounts[0];
+        
+        for (int i = 0; i < monthCounts.length; i++)
+        {
+            if(monthCounts[i] < monthStorage)
+            {
+                monthStorage = monthCounts[i];
+                quietMonth = i;
+            }
+            else if (monthCounts[i] == monthStorage)
+            {
+                quietMonth = i;
+            }
+        }
+        
+        return quietMonth + 1;
+    }
+    /**
+     * this returns the busiest month as an int
+     */
+    public int busyMonth()
+    {
+        int busyMonth = 0;
+        int monthStorage = 0;
+        
+        for (int i = 0; i < monthCounts.length; i++)
+        {
+            if(monthCounts[i] > monthStorage)
+            {
+                monthStorage = monthCounts[i];
+                busyMonth = i;
+            }
+            else if (monthCounts[i] == monthStorage)
+            {
+                busyMonth = i;
+            }
+        }
+        
+        return busyMonth + 1;
+    }  
+    /**
+     * this return the average accesses per month as an int
+     */
+    public int averageAccessesPerMonth()
+    {
+        int averageMonth = 0;
+        int monthStorage = 0;
+        
+        for (int i = 0; i < monthCounts.length; i++)
+        {
+            monthStorage += monthCounts[i];
+        }
+        
+        averageMonth = monthStorage / monthCounts.length;
+        return averageMonth;
     }
     
 }
