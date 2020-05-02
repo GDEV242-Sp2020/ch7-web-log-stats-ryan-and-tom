@@ -52,9 +52,18 @@ public class LogAnalyzer
      */
     public void analyzeData()
     {
-        analyzeHourlyData();
-        analyzeDailyData();
-        analyzeMonthlyData();
+        //analyzeHourlyData();
+        //analyzeDailyData();
+        //analyzeMonthlyData();
+        while(reader.hasNext()) {
+            LogEntry entry = reader.next();
+            int hour = entry.getHour();
+            hourCounts[hour]++;
+            int day = entry.getDay();
+            dayCounts[day-1]++;
+            int month = entry.getMonth();
+            monthCounts[month-1]++;
+        }
     }
     /**
      * Analyze the hourly access data from the log file.
@@ -97,7 +106,7 @@ public class LogAnalyzer
      */
     public void printHourlyCounts()
     {
-        System.out.println("Hr: Count");
+        System.out.println("Hour: Count");
         for(int hour = 0; hour < hourCounts.length; hour++) {
             System.out.println(hour + ": " + hourCounts[hour]);
         }
@@ -110,9 +119,9 @@ public class LogAnalyzer
      */
     public void printDailyCounts()
     {
-        System.out.println("Dy: Count");
+        System.out.println("Day: Count");
         for(int day = 0; day < dayCounts.length; day++) {
-            System.out.println(day + ": " + dayCounts[day]);
+            System.out.println((day+1) + ": " + dayCounts[day]);
         }
     }    
     
@@ -123,9 +132,9 @@ public class LogAnalyzer
      */
     public void printMonthlyCounts()
     {
-        System.out.println("Mnth: Count");
+        System.out.println("Month: Count");
         for(int month = 0; month < monthCounts.length; month++) {
-            System.out.println(month + ": " + monthCounts[month]);
+            System.out.println((month+1) + ": " + monthCounts[month]);
         }
     }    
     
